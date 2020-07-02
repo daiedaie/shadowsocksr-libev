@@ -1219,6 +1219,7 @@ main(int argc, char **argv)
 
     if (conf_path != NULL) {
         conf = read_jconf(conf_path);
+        LOGI("conf->conf_ver [%d] CONF_VER_LEGACY [%d]", conf->conf_ver, CONF_VER_LEGACY);
         if(conf->conf_ver != CONF_VER_LEGACY){
             use_new_profile = 1;
         } else {
@@ -1296,8 +1297,8 @@ main(int argc, char **argv)
         protocol = NULL;
     }
 
-    if (remote_num == 0 || remote_port == NULL ||
-        local_port == NULL || password == NULL) {
+    LOGI("remote_num %d, remote_port %s, local_port %s, password %s", remote_num, remote_port == NULL ? "NULL" : remote_port, local_port == NULL ? "NULL" : local_port, password);
+    if ((!use_new_profile && (remote_num == 0 || remote_port == NULL || password == NULL)) || local_port == NULL) {
         usage();
         exit(EXIT_FAILURE);
     }
